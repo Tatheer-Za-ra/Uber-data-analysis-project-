@@ -1,0 +1,21 @@
+15 Business problems:
+
+1.	Cancellation rate by vehicle type: Which vehicle types (Go Mini, Sedan, Auto, etc.) see the highest driver- or customer-initiated 
+cancellations, and why?
+2.	Peak-time cancellation behavior: At what times of day do customers cancel most often vs. drivers cancel most often? 
+3.	Cancellation reason clustering:Analyze text reasons and flag common themes—e.g.,pricing complaints,driver delays,location mismatch.
+4.	Impact of Avg VTAT & CTAT on cancellations:Is higher wait time (driver arrival or customer arrival) strongly correlated with
+cancellation?
+5.	Avg VTAT & CTAT by location: Which pickup zones cause chronic driver delays? Geo-level bottleneck detection.
+6.	Vehicle utilization analysis: Track incomplete/cancelled rides as a proportion of assigned bookings to estimate wasted vehicle 
+capacity.
+7.	 Driver rating impact on cancellations: Are rides with drivers who has lower average ratings more likely to have their rides
+cancelled by customers?
+8.	Customer loyalty vs. payment method: Do wallet/credit card users show higher ride completion rates compared to cash users?
+9.	Identify vehicle type who got cancelled excessively and measure their impact on system efficiency.
+10.	Revenue leakage due to cancellations: Estimate lost revenue from both customer and driver cancellations.
+11.	Profitability by vehicle type: Compare ride value vs. distance across different vehicle categories.
+12.	Payment method profitability: Which payment methods correlate with higher-value bookings? (Credit card rides vs. UPI vs. cash.)
+13. Temporal ride demand forecasting: Using booking timestamps, forecast high-demand periods to optimize driver supply.
+14	Hotspot detection: Identify locations with high booking density but high cancellation rates—prime areas for driver allocation.
+15.	Incomplete rides by geography: Which zones are prone to incomplete rides, and what are the cited reasons?
