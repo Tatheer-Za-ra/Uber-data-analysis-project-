@@ -1,6 +1,6 @@
 Uber Rides Data Analysis using SQL
 
-![](Uber-data-analysis-project-/Uberlogo.webp at main · Tatheer-Za-ra/Uber-data-analysis-project-)
+![](https://github.com/Tatheer-Za-ra/Uber-data-analysis-project-/blob/main/Uberlogo.webp)
  
 ## Overview
 
@@ -70,8 +70,8 @@ Create table Uber(
 ```
 
 Dataset originally sourced from Kaggle (Uber Rides Dataset). The original link is no longer available, so the cleaned dataset used in this project is provided directly in this repository for reproducibility.
-- Dataset link: Uber-data-analysis-project-/ncr_ride_bookings.csv at main · Tatheer-Za-ra/Uber-data-analysis-project-
 
+- **Dataset Link:** [Uber Dataset](https://github.com/Tatheer-Za-ra/Uber-data-analysis-project-/blob/main/ncr_ride_bookings.csv)
 ## Business Problems and Solutions
 
 
