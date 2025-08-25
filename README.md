@@ -1,66 +1,81 @@
 Uber Rides Data Analysis using SQL
 
-![]()
+![](Uber-data-analysis-project-/Uberlogo.webp at main · Tatheer-Za-ra/Uber-data-analysis-project-)
  
 ## Overview
 
 This project delivers an end-to-end analysis of Uber ride data using SQL. The primary aim is to explore business-critical questions around cancellations, operational efficiency, customer experience, pricing, and demand-supply balance. The queries are designed to replicate the challenges a Business Analyst would face in real-world ride-hailing platforms and demonstrate how SQL can be used to generate actionable insights.
 ## Objectives
 
-•	Investigate cancellation behaviors by vehicle type, customer vs. driver, and time of day.
-•	Measure the operational efficiency of Uber’s fleet through utilization and delay analysis.
-•	Explore customer experience drivers such as loyalty, payment methods, and ratings.
-•	Quantify the revenue impact of cancellations and profitability differences across vehicle types.
-•	Detect demand hotspots and forecast peak times for optimal driver allocation.
+-	Investigate cancellation behaviors by vehicle type, customer vs. driver, and time of day.
+-	Measure the operational efficiency of Uber’s fleet through utilization and delay analysis.
+-	Explore customer experience drivers such as loyalty, payment methods, and ratings.
+-	Quantify the revenue impact of cancellations and profitability differences across vehicle types.
+-	Detect demand hotspots and forecast peak times for optimal driver allocation.
+
 ## Dataset  Details
 
 The Uber dataset consists of ride-level information with the following attributes:
-•	Date: Date of the booking.
-•	Time: Time of the booking.
-•	Booking ID: Unique identifier for each ride booking.
-•	Booking Status: Status of booking (Completed, Cancelled by Customer, Cancelled by Driver, Incomplete, etc.).
-•	Customer ID: Unique identifier for customers.
-•	Vehicle Type: Type of vehicle (Go Mini, Go Sedan, Auto, eBike/Bike, UberXL, Premier Sedan).
-•	Pickup Location: Starting location of the ride.
-•	Drop Location: Destination location of the ride.
-•	Avg VTAT: Average Vehicle Time at Arrival (driver wait time to reach customer).
-•	Avg CTAT: Average Customer Time at Arrival (customer wait time to reach pickup point).
-•	Cancelled Rides by Customer: Flag for customer-initiated cancellations.
-•	Reason for Cancelling by Customer: Text reason provided by customer for cancellation.
-•	Cancelled Rides by Driver: Flag for driver-initiated cancellations.
-•	Driver Cancellation Reason: Text reason provided by driver for cancellation.
-•	Incomplete Rides: Flag for incomplete rides.
-•	Incomplete Rides Reason: Text reason for incomplete rides.
-•	Booking Value: Total fare amount for the ride.
-•	Ride Distance: Distance covered during the ride (in kilometers).
-•	Driver Ratings: Rating given to the driver (1–5 scale).
-•	Customer Rating: Rating given by the customer (1–5 scale).
-•	Payment Method: Method of payment (UPI, Cash, Credit Card, Uber Wallet, Debit Card).
+
+- Date: Date of the booking.
+- Time: Time of the booking.
+- Booking ID: Unique identifier for each ride booking.
+- Booking Status: Status of booking (Completed, Cancelled by Customer, Cancelled by Driver, Incomplete, etc.).
+- Customer ID: Unique identifier for customers.
+- Vehicle Type: Type of vehicle (Go Mini, Go Sedan, Auto, eBike/Bike, UberXL, Premier Sedan).
+- Pickup Location: Starting location of the ride.
+- Drop Location: Destination location of the ride.
+- Avg VTAT: Average Vehicle Time at Arrival (driver wait time to reach customer).
+- Avg CTAT: Average Customer Time at Arrival (customer wait time to reach pickup point).
+- Cancelled Rides by Customer: Flag for customer-initiated cancellations.
+- Reason for Cancelling by Customer: Text reason provided by customer for cancellation.
+- Cancelled Rides by Driver: Flag for driver-initiated cancellations.
+- Driver Cancellation Reason: Text reason provided by driver for cancellation.
+- Incomplete Rides: Flag for incomplete rides.
+- Incomplete Rides Reason: Text reason for incomplete rides.
+- Booking Value: Total fare amount for the ride.
+- Ride Distance: Distance covered during the ride (in kilometers).
+- Driver Ratings: Rating given to the driver (1–5 scale).
+- Customer Rating: Rating given by the customer (1–5 scale).
+- Payment Method: Method of payment (UPI, Cash, Credit Card, Uber Wallet, Debit Card).
 
 ## Schema
-CREATE TABLE uber (
-    trip_id SERIAL PRIMARY KEY,
-    vehicle_type VARCHAR(50),
-    booking_time TIMESTAMP,
-    booking_value NUMERIC,
-    ride_distance NUMERIC,
-    pickup_location VARCHAR(100),
-    cancelled_by_customer BOOLEAN,
-    cancelled_by_driver BOOLEAN,
+```sql
+Drop table if exists Uber;
+
+Create table Uber(
+ booking_date Date NOT NULL,  
+ booking_time TIME NOT NULL,
+ booking_id VARCHAR(15) PRIMARY KEY, 
+    booking_status VARCHAR(25) NOT NULL,
+    customer_id VARCHAR(15) NOT NULL,
+    vehicle_type VARCHAR(15) NOT NULL,
+    pickup_location VARCHAR(30),    
+    drop_location VARCHAR(30),
+    avg_vtat NUMERIC(5,2),           -- minutes
+    avg_ctat NUMERIC(5,2),
+    cancelled_by_customer BOOLEAN DEFAULT FALSE,
     customer_cancel_reason TEXT,
+    cancelled_by_driver BOOLEAN DEFAULT FALSE,
     driver_cancel_reason TEXT,
-    driver_rating NUMERIC,
-    payment_method VARCHAR(50),
-    booking_status VARCHAR(50)
+    incomplete BOOLEAN DEFAULT FALSE,
+    incomplete_reason TEXT,
+    booking_value NUMERIC(10,2),
+    ride_distance NUMERIC(6,2),
+    driver_rating NUMERIC(2,1),
+    customer_rating NUMERIC(2,1),
+    payment_method VARCHAR(20)
+
 );
+```
 
 Dataset originally sourced from Kaggle (Uber Rides Dataset). The original link is no longer available, so the cleaned dataset used in this project is provided directly in this repository for reproducibility.
-link:
+- Dataset link: Uber-data-analysis-project-/ncr_ride_bookings.csv at main · Tatheer-Za-ra/Uber-data-analysis-project-
 
 ## Business Problems and Solutions
 
 
-      **Cancellations & Reliability**
+     Cancellations & Reliability
       
 ### 1.	Cancellation rate by vehicle type
 Which vehicle types see the highest cancellations?
@@ -190,7 +205,7 @@ WHERE (cancelled_by_customer  is not true and
 
 
 **Objective**: Statistical correlation (avg wait vs. cancellation likelihood) reveals how delays affect reliability.
-      **Operational Efficiency**
+     Operational Efficiency
    
 ### 5. Avg VTAT & CTAT by location
 Which pickup zones cause chronic delays?
@@ -232,7 +247,8 @@ From t1;
 
 **Objective**:Cancelled/incomplete rides per vehicle type highlight unused fleet capacity.
 
-Customer Experience & Retention
+   Customer Experience & Retention
+   
 ### 7. Driver rating impact on cancellations
 Are low-rated drivers more likely to be cancelled?
 
@@ -310,7 +326,7 @@ order by cancellation_per desc;
 
 **Objective**:Cancellation-heavy vehicle types are flagged as high-risk for operations.
 
-      **Revenue & Pricing**
+     Revenue & Pricing
 ### 10. Revenue leakage due to cancellations
 How much money is lost from cancelled bookings?
 
@@ -357,7 +373,7 @@ order by avg_booking_value desc ;
 
 **Objective**:Averages show if card/wallet rides correlate with higher revenues.
 
-      **Demand & Supply Analysis**
+      Demand & Supply Analysis
       
 ### 13. Temporal demand forecasting
 When is demand highest?
@@ -375,7 +391,7 @@ order by no_of_rides desc;
 
 
 
-**Objective**:Ride counts grouped by hour/day reveal high-demand periods for driver supply planning.
+**Objective**:Ride counts grouped by hour reveal high-demand periods for driver supply planning.
 ### 14. Hotspot detection
 Which pickup zones need more drivers?
 
@@ -395,7 +411,7 @@ order by incomplete_bcz_no_driver_found desc
 
 ```
 
-**Objective**:High bookings + high cancellations highlight underserved areas.
+**Objective**: high cancellations for reason 'No Driver Found'  highlight underserved areas.
 ### 15. Incomplete rides by geography
 Where do rides fail to complete?
 
@@ -413,12 +429,12 @@ order by incomplete_rides desc;
 **Objective**:Location-wise incomplete ride counts expose weak operational coverage.
 
 ## Findings & Conclusion
-•	Reliability Risks: Uber Xl,Autos and Go Mini often show higher cancellation rates, driven by pricing sensitivity and supply constraints.
-•	Peak-Time Stress: Evening  rush hours (the ride cancellation by driver/customer peak hour is 6pm)  reveal the sharpest spike in cancellations, both driver- and customer-initiated.
-•	Revenue Loss: Cancelled rides represent a tangible revenue leakage, especially in high-value vehicle types like Sedans and XL.
-•	Customer Behavior: Cash-heavy customers cancel more frequently; wallet/credit card users demonstrate stronger completion loyalty.
-•	Efficiency Insights: Certain pickup zones consistently underperform, showing bottlenecks in both arrival delays and ride completion.
-•	Forecasting Opportunity: Demand clustering by hour and geography provides actionable levers for supply-side optimization.
+-	Reliability Risks: Uber Xl,Autos and Go Mini often show higher cancellation rates, driven by pricing sensitivity and supply constraints.
+- Peak-Time Stress: Evening  rush hours (the ride cancellation by driver/customer peak hour is 6pm)  reveal the sharpest spike in cancellations, both driver- and customer-initiated.
+-	Revenue Loss: Cancelled rides represent a tangible revenue leakage, especially in high-value vehicle types like Sedans and XL.
+-	Customer Behavior: Cash-heavy customers cancel more frequently; wallet/credit card users demonstrate stronger completion loyalty.
+-	Efficiency Insights: Certain pickup zones consistently underperform, showing bottlenecks in both arrival delays and ride completion.
+-	Forecasting Opportunity: Demand clustering by hour and geography provides actionable levers for supply-side optimization.
 This project provides a 360° analytical lens on Uber’s core operational, financial, and customer challenges, demonstrating SQL as a powerful tool for business analytics.
 
 ## Author – Tatheer Zahra
